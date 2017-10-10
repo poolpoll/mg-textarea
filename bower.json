@@ -1,0 +1,21 @@
+{
+  "name": "mg-textarea",
+  "version": "1.0.0",
+  "homepage": "https://github.com/possible819/mg-textarea",
+  "authors": [
+    "Jay Lee <jaylee.possible@gmail.com>"
+  ],
+  "description": "polymer mg-textarea component",
+  "main": "mg-textarea.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "polymer/polymer#^1.9.2"
+  }
+}
