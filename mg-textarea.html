@@ -2,12 +2,82 @@
 
 <dom-module id="mg-textarea">
 	<template>
+		<style>
+			:host {
+				display: flex;
+			}
+			textarea {
+				height: 0px;
+				min-height: var(--mg-textarea-min-height);
+        width: -webkit-fill-available;
+        font-size: var(--mg-textarea-font-size, 10pt);
+        resize: none;
+        border: none;
+        border-radius: 5px;				
+			}
+		</style>
+
+		<textarea id="textarea" max-length="[[maxLength]]" placeholder="{{placeholder}}" on-input="_onInput"></textarea>
+
 	</template>
 	<script>
 		Polymer({
 			is: 'mg-textarea',
 
 			properties: {
+				value: {
+					type: String,
+					observer: '_valueChanged',
+					notify: true
+				},
+
+				maxLength: {
+					type: Number
+				},
+
+				readonly: {
+					type: Boolean,
+					observer: '_readonlyChanged',
+					notify: true
+				},
+
+				autoGrow: {
+					type: Boolean,
+					value: false
+				}
+			},
+
+			adjustHeight: function() {
+				this.$['textarea'].style.minHeight = this.$['textarea'].scrollHeight + 'px';
+			},
+
+			attributeChanged: function() {
+				if(this.autoGrow) this.$['textarea'].style.minHeight = this.$['textarea'].scrollHeight + 'px';
+			},
+
+			focus: function(event) {
+				event.preventDefault();
+				this.$['textarea'].focus();
+			},
+
+			/**
+			 * input 필드에 값이 들어 왔을때 발생하며 입력 받은 값을 this.value에 초기화
+			 * @param  Object event on input event
+			 */
+			_onInput: function(event) {
+				this.value = event.srcElement.value;
+			},
+
+			_valueChanged: function(value) {
+				this.$['textarea'].value = value;
+			},
+
+			_readonlyChanged: function(readonly) {
+				if(readonly) {
+					this.$['textarea'].setAttribute('readonly', true);
+				} else {
+					this.$['textarea'].removeAttribute('readonly');
+				}
 			}
 		})
 	</script>
